@@ -55,6 +55,8 @@ void setupDisplay()
       ; // Don't proceed, loop forever
   }
 
+  display.clearDisplay();
+
 #ifdef OPTIMIZE_SSD1306
   display_buf = display.getBuffer();
 #endif

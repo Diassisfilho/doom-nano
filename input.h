@@ -1,7 +1,8 @@
 #ifndef _input_h
 #define _input_h
 
-enum BUTTONS {
+enum BUTTONS
+{
   B = 0x0001,
   Y = 0x0002,
   SELECT = 0x0004,
@@ -15,6 +16,9 @@ enum BUTTONS {
   LB = 0x0400,
   RB = 0x0800
 };
+
+#define XAXIS_BASE_VALUE 130
+#define XAXIS_VARIATION_VALUE 50
 
 void input_setup();
 bool input_up();

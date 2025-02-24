@@ -3,17 +3,18 @@
 #include "constants.h"
 
 #ifdef USE_INPUT_PULLUP
-  #define INPUT_MODE INPUT_PULLUP
-  #define INPUT_STATE LOW
+#define INPUT_MODE INPUT_PULLUP
+#define INPUT_STATE 0
 #else
-  #define INPUT_MODE INPUT
-  #define INPUT_STATE HIGH
+#define INPUT_MODE INPUT
+#define INPUT_STATE 1
 #endif
 
 #ifdef SNES_CONTROLLER
 uint16_t buttons = 0;
 
-void input_setup() {
+void input_setup()
+{
   // Set DATA_CLOCK normally HIGH
   pinMode(DATA_CLOCK, OUTPUT);
   digitalWrite(DATA_CLOCK, HIGH);
@@ -28,7 +29,8 @@ void input_setup() {
   pinMode(DATA_SERIAL, INPUT);
 }
 
-void getControllerData(void){
+void getControllerData(void)
+{
   // Latch for 12us
   digitalWrite(DATA_LATCH, HIGH);
   delayMicroseconds(12);
@@ -36,7 +38,8 @@ void getControllerData(void){
   delayMicroseconds(6);
   buttons = 0;
   // Retrieve button presses from shift register by pulling the clock high for 6us
-  for(uint8_t i = 0; i < 16; ++i){
+  for (uint8_t i = 0; i < 16; ++i)
+  {
     digitalWrite(DATA_CLOCK, LOW);
     delayMicroseconds(6);
     buttons |= !digitalRead(DATA_SERIAL) << i;
@@ -45,56 +48,64 @@ void getControllerData(void){
   }
 }
 
-bool input_left() {
+bool input_left()
+{
   return buttons & LEFT;
 };
 
-bool input_right() {
+bool input_right()
+{
   return buttons & RIGHT;
 };
 
-bool input_up() {
+bool input_up()
+{
   return buttons & UP;
 };
 
-bool input_down() {
+bool input_down()
+{
   return buttons & DOWN;
 };
 
-bool input_fire() {
+bool input_fire()
+{
   return buttons & Y;
 };
 
-bool input_start() {
+bool input_start()
+{
   return buttons & START;
 }
 #else
 
-void input_setup() {
-  pinMode(K_LEFT, INPUT_MODE);
-  pinMode(K_RIGHT, INPUT_MODE);
-  pinMode(K_UP, INPUT_MODE);
-  pinMode(K_DOWN, INPUT_MODE);
+void input_setup()
+{
   pinMode(K_FIRE, INPUT_MODE);
 }
 
-bool input_left() {
-  return digitalRead(K_LEFT) == INPUT_STATE;
+bool input_left()
+{
+  return map(analogRead(27), 0, 1023, 0, 255) <= (XAXIS_BASE_VALUE - XAXIS_VARIATION_VALUE);
 };
 
-bool input_right() {
-  return digitalRead(K_RIGHT) == INPUT_STATE;
+bool input_right()
+{
+  return map(analogRead(27), 0, 1023, 0, 255) >= (XAXIS_BASE_VALUE + XAXIS_VARIATION_VALUE);
 };
 
-bool input_up() {
-  return digitalRead(K_UP) == INPUT_STATE;
+bool input_up()
+{
+  return map(analogRead(26), 0, 1023, 0, 255) >= (XAXIS_BASE_VALUE + XAXIS_VARIATION_VALUE);
 };
 
-bool input_down() {
-  return digitalRead(K_DOWN) == INPUT_STATE;
+bool input_down()
+{
+  return map(analogRead(26), 0, 1023, 0, 255) >= (XAXIS_BASE_VALUE + XAXIS_VARIATION_VALUE);
 };
 
-bool input_fire() {
+bool input_fire()
+{
   return digitalRead(K_FIRE) == INPUT_STATE;
 };
 #endif
