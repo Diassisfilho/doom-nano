@@ -1,57 +1,42 @@
 # doom-nano
-A 3d raycast engine for Arduino
+This is a fork of a minimal Doom version for Arduino Nano, changed for work with BitDogLab. The original readme.md ([README.md](./_README.md)) is avaible and the [original repository](https://github.com/daveruiz/doom-nano) also if you are interested to see commits to see how changed from code attached to avr architecture and changed to generic architecture approach using arduino.
 
-![](/images/screen-1.jpg?raw=true)
+![](/images/doom-nano-screens.png?raw=true)
 
-See it in action:
-- https://youtu.be/wJG04DSo7Xw (Progress on Feb, 09 2019)
-- https://youtu.be/FX7PQtUAkHk (Progress on Jan, 18 2019)
+Youtube video of gameplay in BitDogLab board:  
+https://youtube.com/shorts/MBNVieKgH24
 
-Just experimenting with an Arduino Nano I bought some time ago. This chip is very limited in process and memory: 16Mhz, only 32kb for program memory and 2kb of RAM, of which 1kb is entirely used for the screen.
-Most of problems I´m facing currently are about memory. CPU clock might be a problem too, but can be more or less avoided having more memory for calculation shortcuts.
-Despite of all those limitations it´s capable to run at up to 14 FPS. Probably can be optimized and structured much better. Will try to keep learning and improve it.
+# Como instalar
+* Você precisa ter instalada a última versão do [**Arduino IDE**](https://www.arduino.cc/en/software).
+* **Siga este [tutorial](https://randomnerdtutorials.com/programming-raspberry-pi-pico-w-arduino-ide/)** para fazer o Arduino IDE rodar o jogo no Pi Pico e como configurá-lo.
+* **Baixe este repositório**. Você pode usar o comando git clone assim:
+```bash
+git clone https://github.com/diassisfilho/doom-nano.git
+```
+* Se você quiser outro método além de usar git clone, clique no botão verde 'Code' neste repositório e clique em 'Download Zip', baixe e descompacte.
+* Clique no código doom-nano.ino para abrir com o **Arduino IDE** e então selecione a placa Raspberry Pi Pico W.
+* Instale a biblioteca dependente Adafruit SSD1306 na aba de bibliotecas do Arduino IDE:
+![](./images/libraries-tab-screenshot.png)
+* Selecione o método de upload picotool:
+![](./images/upload-method-screen.png)
+* Então clique no Arduino IDE para fazer o upload do código (seta verde à direita)
+* Aproveite seu jogo ;)
 
-To be clear. **This is not an actual Doom game**, just picked some sprites from it (and simplified a lot). The rendering engine is more like a Wolfeistein 3D. The Doom idea came because I started this building the fancy melt-screen effect (included in an early version, but not anymore).
+# How to install
+* You need installed the last version of [**Arduino IDE**](https://www.arduino.cc/en/software). 
+* **Follow this [tutorial](https://randomnerdtutorials.com/programming-raspberry-pi-pico-w-arduino-ide/)** to make Arduino IDE run the game in Pi Pico and how to configure it.
+* **Download this repository**. You can use git clone command like this:
+```bash
+git clone https://github.com/diassisfilho/doom-nano.git
+```
+* If you want another method than use git clone just click in 'Code' green button in this repositorie and click in 'Download Zip', download and unzip.
+* Click in doom-nano.ino code to open with **Arduino IDE** and then select Raspberry Pi Pico W board.
+* Install the dependent Adafruit SSD1306 librarie in Arduino IDE libraries tab:
+![](./images/libraries-tab-screenshot.png)
+* Select picotool upload method:
+![](./images/upload-method-screen.png)
+* Then click in Arduino IDE to upload code (green right arrow)
+* Enjoy your gameplay ;)
 
-Hardware I used:
-- A protoboard
-- An Arduino Uno/Nano (ATmega328P)
-- An OLED Display (i2c 128x64)
-- 4 buttons
-- ~~4 10k ohms resistors~~. Not needed anymore, check out the wiring diagram from below.
-- Buzzer (Optional)
-
-Resources:
-- Sprites from https://www.spriters-resource.com
-- Much thanks to https://lodev.org/cgtutor for so wonderful resource about raycasting engines
-
-Current status:
-- The map rendering is working nicely. Even I was able to add a depth effect by using different dithering patterns, depending on the distance to the view.
-- Sprites are working too, though has some issues hiding them behind walls because memory limitations (the z-buffer precision has been limited a lot to make it smaller).
-- You can move through the map, collide with walls, collect items and interact with enemies. I could also add the jogging effect, like Doom´s one.
-- The enemies AI, despite is very simple, I think works very well and it´s enough for the purpose of the game. Looks very similar to  Imp enemy from original Doom.
-- For the HUD, I realized that the native `print` from Adafruit's library uses too much memory. So I've implemented my custom text rendering methods and a custom font which includes only needed characters and some icons.
-- ~~Currently I´m using 99% of program memory, which doesn´t let me adds more code. I need to research how to optimize it to make it smaller.~~
-- FPS and memory consumption has been improved using a slim and customized version of the SSD1306 lib from Adafruit. Thanks  [@miracoly](https://github.com/miracoli)
-- Now it has a basic sound support through Pin 9. Thanks again [@miracoly](https://github.com/miracoli)!
-
-(I'd like) To do:
-- ~~Make possible kill enemies.~~
-- Doors and locked doors.
-- A game over screen.
-- Add more sprites, decorative elements, etc.
-- Textures? Very performance expensive. I don't think so.
-- Make code looks nicer! Move all to pure c++.
-- ~~Sound/Music? Hmmm I wish so, but...~~
-
-Simplified version (using an Arduino UNO, built-in pull-up resistors for buttons and a buzzer):
-![](/images/input-pull-up-version.jpg?raw=true)
-
-Wiring:
-![](/images/wiring.png?raw=true)
-
-More screens (outdated):
-![](/images/screen-4.jpg?raw=true)
-![](/images/screen-5.jpg?raw=true)
-![](/images/screen-6.jpg?raw=true)
-![](/images/screen-7.jpg?raw=true)
+# License
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
