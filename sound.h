@@ -30,22 +30,28 @@ uint8_t idx = 0;
 bool sound = false;
 uint16_t snd_ptr = 0;
 uint8_t snd_len = 0;
+const uint8_t pin_buzzer = SOUND_PIN;
+// const int duration = 2200;
+const int duration = 15;
 
 void sound_init()
 {
-  // pinMode(SOUND_PIN, OUTPUT);
-
-  // TCCR2A = (1 << WGM21); // CTC
-  // TCCR2B = (1 << CS22) | (1 << CS21) | (1 << CS20); // prescaler 1024
-  // OCR2A = 112 - 1; // 16000000 / 1024 / 112 -> 139,5 Hz
-  // TIMSK2 = (1 << OCIE2A);
+  // Serial.begin(9600);
+  pinMode(pin_buzzer, OUTPUT);
+  digitalWrite(pin_buzzer, LOW);
 }
 
 void playSound(const uint8_t *snd, uint8_t len)
 {
-  // snd_ptr = reinterpret_cast<uint16_t>(snd);
-  // snd_len = len;
-  // sound = true;
+  for (uint8_t x = 0; x < len; x++)
+  {
+    if (SOUND_ON)
+    {
+      unsigned int freq = 1192030 / (60 * (unsigned int)*(snd + x));
+      tone(SOUND_PIN, freq, duration);
+      delay(duration);
+    }
+  }
 }
 
 // Set the frequency that we will get on pin OCR1A
